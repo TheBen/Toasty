@@ -1,0 +1,33 @@
+﻿<Window x:Class="ToastPOC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:toast="clr-namespace:Toast;assembly=Toast"
+        Title="MainWindow" Height="200" Width="525">
+	<Grid Background="LightCoral">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		
+		<Button Content="Show" Click="ShowButton_Click" Grid.Row="0" />
+		
+		<toast:Toasty x:Name="myToast"
+									Height="30"
+									Grid.Row="2"
+									VerticalAlignment="Bottom"
+									Duration="0:0:0:2"
+									Message="{Binding MyMessage}"
+									CommandTitle="myAction"
+									Command="{Binding MyCommand}"
+									CommandParameter="Yep"
+									FontFamily="Segoe UI"
+									FontWeight="Bold"
+									MessageColor="Orange"
+									ActionColor="Yellow"
+									FontSize="12">
+			<toast:Toasty.Background>
+				<SolidColorBrush Color="#333333" Opacity="1" />
+			</toast:Toasty.Background>
+		</toast:Toasty>
+	</Grid>
+</Window>
