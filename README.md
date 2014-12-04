@@ -41,3 +41,7 @@ Or if you use MVVM, just bind the ``Message`` property of a ``Toasty`` to a stri
 {Binding MyMessage}
 ```
 Setting a new string to ``MyMessage`` will show a toast.
+
+
+Feel free to contact me with any issues, requests or feedback you may have.
+I'm open for suggestions and improvemnts and encourage you to fork the project.
