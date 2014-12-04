@@ -159,7 +159,10 @@ namespace Toast
 				InitializeAnimation();
 			}
 
-			m_ShowAnimation.Begin();
+			if (!string.IsNullOrEmpty(Message) && !string.IsNullOrWhiteSpace(Message))
+			{
+				m_ShowAnimation.Begin();
+			}
 		}
 
 		public void Show(string message)
