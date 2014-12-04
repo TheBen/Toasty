@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Toast")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nice Systems")]
+[assembly: AssemblyCompany("Ben Grynhaus")]
 [assembly: AssemblyProduct("Toast")]
-[assembly: AssemblyCopyright("Copyright © Nice Systems 2014")]
+[assembly: AssemblyCopyright("Copyright © Ben Grynhaus 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
