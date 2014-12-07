@@ -38,7 +38,7 @@ myToast.Show();
 
 Or if you use MVVM, just bind the ``Message`` property of a ``Toasty`` to a string like so:
 ``` XAML
-{Binding MyMessage}
+<toast:Toasty Message={Binding MyMessage} />
 ```
 Setting a new string to ``MyMessage`` will show a toast.
 
