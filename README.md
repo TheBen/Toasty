@@ -33,7 +33,9 @@ And just add a a ``Toasty`` object to your main ``Grid``:
 
 Showing a toast can be code programatically:
 ``` C#
-myToast.Show();
+myToast.Show("Hello World!", TimeSpan.FromSeconds(1));
+//or
+await myToast.ShowAsync("Hello World!", TimeSpan.FromSeconds(1));
 ```
 
 Or if you use MVVM, just bind the ``Message`` property of a ``Toasty`` to a string like so:
