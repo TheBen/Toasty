@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -143,18 +144,49 @@ namespace Toast {
         public void Show() {
             InitializeAnimation();
 
-            if(!string.IsNullOrEmpty(Message) && !string.IsNullOrWhiteSpace(Message)) {
+            if(!string.IsNullOrWhiteSpace(Message)) {
                 m_ShowAnimation.Begin();
             }
         }
 
         public void Show(string message) {
             Message = message;
+            Show();
         }
 
         public void Show(string message, TimeSpan duration) {
+            Message = message;
             Duration = duration;
-            Show(message);
+            Show();
+        }
+
+        public Task ShowAsync() {
+            InitializeAnimation();
+
+            if(!string.IsNullOrWhiteSpace(Message)) {
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+                EventHandler onComplete = null;
+                onComplete = (s, e) => {
+                    m_ShowAnimation.Completed -= onComplete;
+                    tcs.SetResult(true);
+                };
+                m_ShowAnimation.Completed += onComplete;
+                m_ShowAnimation.Begin();
+                return tcs.Task;
+            }
+
+            return null;
+        }
+
+        public Task ShowAsync(string message) {
+            Message = message;
+            return ShowAsync();
+        }
+
+        public Task ShowAsync(string message, TimeSpan duration) {
+            Message = message;
+            Duration = duration;
+            return ShowAsync();
         }
 
         #endregion
