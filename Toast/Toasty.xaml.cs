@@ -5,229 +5,204 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Toast
-{
-	public partial class Toasty : UserControl, ICommandSource
-	{
-		#region Consts
+namespace Toast {
+    public partial class Toasty : UserControl, ICommandSource {
+        #region Consts
 
-		private static readonly TimeSpan ANIMATION_TIME = TimeSpan.FromMilliseconds(300);
-		
-		#endregion
+        private static readonly TimeSpan ANIMATION_TIME = TimeSpan.FromMilliseconds(300);
 
-		#region Data Members
+        #endregion
 
-		private Storyboard m_ShowAnimation;
+        #region Data Members
 
-		#endregion
+        private Storyboard m_ShowAnimation;
 
-		#region Properties
+        #endregion
 
-		#region Message
+        #region Properties
 
-		public string Message
-		{
-			get { return (string)GetValue(MessageProperty); }
-			set { SetValue(MessageProperty, value); }
-		}
+        #region Message
 
-		public static readonly DependencyProperty MessageProperty =
-			DependencyProperty.Register("Message", typeof(string), typeof(Toasty), new PropertyMetadata(string.Empty, OnMessageChanged, OnMessageSet));
+        public string Message {
+            get { return (string)GetValue(MessageProperty); }
+            set { SetValue(MessageProperty, value); }
+        }
 
-		#endregion
+        public static readonly DependencyProperty MessageProperty =
+            DependencyProperty.Register("Message", typeof(string), typeof(Toasty), new PropertyMetadata(string.Empty, OnMessageChanged, OnMessageSet));
 
-		#region CommandTitle
+        #endregion
 
-		public string CommandTitle
-		{
-			get { return (string)GetValue(CommandTitleProperty); }
-			set { SetValue(CommandTitleProperty, value); }
-		}
+        #region CommandTitle
 
-		public static readonly DependencyProperty CommandTitleProperty =
-			DependencyProperty.Register("CommandTitle", typeof(string), typeof(Toasty));
+        public string CommandTitle {
+            get { return (string)GetValue(CommandTitleProperty); }
+            set { SetValue(CommandTitleProperty, value); }
+        }
 
-		#endregion
+        public static readonly DependencyProperty CommandTitleProperty =
+            DependencyProperty.Register("CommandTitle", typeof(string), typeof(Toasty));
 
-		#region Duration
+        #endregion
 
-		public TimeSpan Duration
-		{
-			get { return (TimeSpan)GetValue(DurationProperty); }
-			set { SetValue(DurationProperty, value); }
-		}
+        #region Duration
 
-		public static readonly DependencyProperty DurationProperty =
-			DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(Toasty), new PropertyMetadata(TimeSpan.FromSeconds(1)));
+        public TimeSpan Duration {
+            get { return (TimeSpan)GetValue(DurationProperty); }
+            set { SetValue(DurationProperty, value); }
+        }
 
-		#endregion
+        public static readonly DependencyProperty DurationProperty =
+            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(Toasty), new PropertyMetadata(TimeSpan.FromSeconds(1)));
 
-		#region Command
+        #endregion
 
-		/// <summary>
-		/// Get or set the Command property
-		/// </summary>
-		public ICommand Command
-		{
-			get { return (ICommand)GetValue(CommandProperty); }
-			set { SetValue(CommandProperty, value); }
-		}
+        #region Command
 
-		/// <summary>
-		/// Reflects the parameter to pass to the CommandProperty upon execution.
-		/// </summary>
-		public object CommandParameter
-		{
-			get { return GetValue(CommandParameterProperty); }
-			set { SetValue(CommandParameterProperty, value); }
-		}
+        /// <summary>
+        /// Get or set the Command property
+        /// </summary>
+        public ICommand Command {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
 
-		/// <summary>
-		///     The target element on which to fire the command.
-		/// </summary>
-		public IInputElement CommandTarget
-		{
-			get { return (IInputElement)GetValue(CommandTargetProperty); }
-			set { SetValue(CommandTargetProperty, value); }
-		}
+        /// <summary>
+        /// Reflects the parameter to pass to the CommandProperty upon execution.
+        /// </summary>
+        public object CommandParameter {
+            get { return GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
 
-		public static readonly DependencyProperty CommandProperty = Button.CommandProperty.AddOwner(typeof(Toasty));
+        /// <summary>
+        ///     The target element on which to fire the command.
+        /// </summary>
+        public IInputElement CommandTarget {
+            get { return (IInputElement)GetValue(CommandTargetProperty); }
+            set { SetValue(CommandTargetProperty, value); }
+        }
 
-		public static readonly DependencyProperty CommandParameterProperty = Button.CommandParameterProperty.AddOwner(typeof(Toasty));
+        public static readonly DependencyProperty CommandProperty = Button.CommandProperty.AddOwner(typeof(Toasty));
 
-		public static readonly DependencyProperty CommandTargetProperty = Button.CommandTargetProperty.AddOwner(typeof(Toasty));
+        public static readonly DependencyProperty CommandParameterProperty = Button.CommandParameterProperty.AddOwner(typeof(Toasty));
 
-		#endregion
+        public static readonly DependencyProperty CommandTargetProperty = Button.CommandTargetProperty.AddOwner(typeof(Toasty));
 
-		#region MessageColor
+        #endregion
 
-		public Brush MessageColor
-		{
-			get { return (Brush)GetValue(MessageColorProperty); }
-			set { SetValue(MessageColorProperty, value); }
-		}
+        #region MessageColor
 
-		public static readonly DependencyProperty MessageColorProperty =
-			DependencyProperty.Register("MessageColor", typeof(Brush), typeof(Toasty), new PropertyMetadata(Brushes.White));
+        public Brush MessageColor {
+            get { return (Brush)GetValue(MessageColorProperty); }
+            set { SetValue(MessageColorProperty, value); }
+        }
 
-		#endregion
+        public static readonly DependencyProperty MessageColorProperty =
+            DependencyProperty.Register("MessageColor", typeof(Brush), typeof(Toasty), new PropertyMetadata(Brushes.White));
 
-		#region ActionColor
+        #endregion
 
-		public Brush ActionColor
-		{
-			get { return (Brush)GetValue(ActionColorProperty); }
-			set { SetValue(ActionColorProperty, value); }
-		}
+        #region ActionColor
 
-		public static readonly DependencyProperty ActionColorProperty =
-			DependencyProperty.Register("ActionColor", typeof(Brush), typeof(Toasty), new PropertyMetadata(Brushes.White));
+        public Brush ActionColor {
+            get { return (Brush)GetValue(ActionColorProperty); }
+            set { SetValue(ActionColorProperty, value); }
+        }
 
-		#endregion
+        public static readonly DependencyProperty ActionColorProperty =
+            DependencyProperty.Register("ActionColor", typeof(Brush), typeof(Toasty), new PropertyMetadata(Brushes.White));
 
-		#endregion
+        #endregion
 
-		#region C'tor
+        #endregion
 
-		public Toasty()
-		{
-			InitializeComponent();
+        #region C'tor
 
-			this.Loaded += Toasty_Loaded;
-		}
+        public Toasty() {
+            InitializeComponent();
 
-		private void Toasty_Loaded(object sender, RoutedEventArgs e)
-		{
-			this.Loaded -= Toasty_Loaded;
+            this.Loaded += Toasty_Loaded;
+        }
 
-			Parent.SetValue(UIElement.ClipToBoundsProperty, true);
+        private void Toasty_Loaded(object sender, RoutedEventArgs e) {
+            this.Loaded -= Toasty_Loaded;
 
-			// Move the toast below the parent
-			ToastRoot.RenderTransform = new TranslateTransform(0, Height);
+            Parent.SetValue(UIElement.ClipToBoundsProperty, true);
 
-			InitializeAnimation();
-		}
+            // Move the toast below the parent
+            ToastRoot.RenderTransform = new TranslateTransform(0, Height);
 
-		#endregion
+            InitializeAnimation();
+        }
 
-		#region Public Methods
+        #endregion
 
-		public void Show()
-		{
-			if (m_ShowAnimation == null)
-			{
-				InitializeAnimation();
-			}
+        #region Public Methods
 
-			if (!string.IsNullOrEmpty(Message) && !string.IsNullOrWhiteSpace(Message))
-			{
-				m_ShowAnimation.Begin();
-			}
-		}
+        public void Show() {
+            InitializeAnimation();
 
-		public void Show(string message)
-		{
-			Message = message;
-		}
+            if(!string.IsNullOrEmpty(Message) && !string.IsNullOrWhiteSpace(Message)) {
+                m_ShowAnimation.Begin();
+            }
+        }
 
-		public void Show(string message, TimeSpan duration)
-		{
-			Show(message);
-			Duration = duration;
-		}
+        public void Show(string message) {
+            Message = message;
+        }
 
-		#endregion
+        public void Show(string message, TimeSpan duration) {
+            Duration = duration;
+            Show(message);
+        }
 
-		#region Event Handlers
+        #endregion
 
-		private static void OnMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			Toasty toast = d as Toasty;
-			if (toast == null)
-			{
-				return;
-			}
+        #region Event Handlers
 
-			toast.Show();
-		}
+        private static void OnMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            Toasty toast = d as Toasty;
+            if(toast == null) {
+                return;
+            }
+
+            toast.Show();
+        }
 
 
-		private static object OnMessageSet(DependencyObject d, object baseValue)
-		{
-			Toasty toast = d as Toasty;
-			if (toast != null)
-			{
-				toast.Show();
-			}
+        private static object OnMessageSet(DependencyObject d, object baseValue) {
+            Toasty toast = d as Toasty;
+            if(toast != null) {
+                toast.Show();
+            }
 
-			return baseValue;
-		}
+            return baseValue;
+        }
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void InitializeAnimation()
-		{
-			// Half duration is needed because of AutoReverse
-			var halfDuration = TimeSpan.FromTicks(Duration.Ticks / 2);
+        private void InitializeAnimation() {
+            // Half duration is needed because of AutoReverse
+            var halfDuration = TimeSpan.FromTicks(Duration.Ticks / 2);
 
-			DoubleAnimationUsingKeyFrames showAnim = new DoubleAnimationUsingKeyFrames()
-			{
-				AutoReverse = true,
-				Duration = new Duration(halfDuration)
-			};
+            DoubleAnimationUsingKeyFrames showAnim = new DoubleAnimationUsingKeyFrames() {
+                AutoReverse = true,
+                Duration = new Duration(halfDuration)
+            };
 
-			showAnim.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0)), Value = Height });
-			showAnim.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(ANIMATION_TIME), Value = 0 });
+            showAnim.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0)), Value = Height });
+            showAnim.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = KeyTime.FromTimeSpan(ANIMATION_TIME), Value = 0 });
 
-			Storyboard.SetTarget(showAnim, ToastRoot);
-			Storyboard.SetTargetProperty(showAnim, new PropertyPath("RenderTransform.(TranslateTransform.Y)"));
+            Storyboard.SetTarget(showAnim, ToastRoot);
+            Storyboard.SetTargetProperty(showAnim, new PropertyPath("RenderTransform.(TranslateTransform.Y)"));
 
-			m_ShowAnimation = new Storyboard();
-			m_ShowAnimation.Children.Add(showAnim);
-		}
+            m_ShowAnimation = new Storyboard();
+            m_ShowAnimation.Children.Add(showAnim);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
